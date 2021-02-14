@@ -1,0 +1,9 @@
+---
+
+installation_root_folder: "/opt/Experitest"
+installation_folder: "{{ installation_root_folder }}/{{ app_name }}"
+
+temp_folder: "/var/tmp/Experitest"
+
+installer_file_name: "web-studio-{{ app_version }}.zip"
+relative_path: "web-studio"

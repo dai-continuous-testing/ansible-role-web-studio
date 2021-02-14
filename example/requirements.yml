@@ -1,0 +1,4 @@
+
+- src: git+https://github.com/ExperitestOfficial/ansible-role-web-studio.git
+  version: master
+  name: web-studio

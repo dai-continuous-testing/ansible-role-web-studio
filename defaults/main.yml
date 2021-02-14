@@ -1,0 +1,10 @@
+---
+
+app_name: web-studio
+
+app_version: master.34
+
+clear_before_install: False
+
+cdn_name: "devops-artifacts.experitest.com"
+download_url: "https://{{ cdn_name }}/{{ relative_path }}/{{ installer_file_name }}"

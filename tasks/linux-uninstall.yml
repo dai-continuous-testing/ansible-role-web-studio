@@ -1,0 +1,11 @@
+
+- name: assert all vars are set
+  assert: { that: "{{ item }} != '' " }
+  with_items:
+  - installation_folder
+
+- name: remove installation folder
+  file:
+    path: "{{ installation_folder }}"
+    state: absent
+  become: yes

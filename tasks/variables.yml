@@ -1,0 +1,6 @@
+---
+
+- name: gather os specific variables
+  include_vars: 
+    file: "{{ ansible_os_family | os_family_to_os_type }}.yml"
+    
