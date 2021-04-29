@@ -10,4 +10,4 @@ clear_temp_folder: False
 custom_download_url: ""
 
 cdn_name: "devops-artifacts.experitest.com"
-download_url: "https://{{ cdn_name }}/{{ relative_path }}/{{ installer_file_name }}"
+s3_download_url: "https://{{ cdn_name }}/{{ relative_path }}/{{ installer_file_name }}"
