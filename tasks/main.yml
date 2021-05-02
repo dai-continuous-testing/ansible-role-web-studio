@@ -2,22 +2,22 @@
 
 - name: validate vars
   include_tasks: tasks/variables.yml
-  when: ansible_os_family|lower == "redhat"
+  when: ansible_os_family|lower == "redhat" or ansible_os_family|lower == "windows"
 
 - name: clear temp folder
   include_tasks: "tasks/{{ ansible_os_family | os_family_to_os_type }}-clear-temp.yml"
   when: 
     - clear_temp_folder | default('no') | bool
-    - ansible_os_family|lower == "redhat"
+    - ansible_os_family|lower == "redhat" or ansible_os_family|lower == "windows"
 
 - name: install
   include_tasks: "tasks/{{ ansible_os_family | os_family_to_os_type }}-install.yml"
   when: 
     - state|default('present') == 'present' 
-    - ansible_os_family|lower == "redhat"
+    - ansible_os_family|lower == "redhat" or ansible_os_family|lower == "windows"
 
 - name: uninstall
   include_tasks: "tasks/{{ ansible_os_family | os_family_to_os_type }}-uninstall.yml"
   when: 
     - state|default('present') == 'absent' 
-    - ansible_os_family|lower == "redhat"
+    - ansible_os_family|lower == "redhat" or ansible_os_family|lower == "windows"
