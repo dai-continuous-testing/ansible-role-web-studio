@@ -1,8 +1,11 @@
 ---
+required_modifiable_fields:
+  - app_version
+  - installation_root_folder
 
 app_name: web-studio
 
-app_version: master.34
+__app_version: 21.5.186
 
 clear_before_install: False
 clear_temp_folder: False
