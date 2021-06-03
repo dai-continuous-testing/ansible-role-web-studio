@@ -127,6 +127,8 @@
 - name: synchronize zip content to installation folder
   command: "rsync -r {{ temp_folder }}/{{ (installer_file_name | splitext)[0] }}/ {{ installation_folder }}/current/"
   become: yes
+  notify:
+    - start the service
 
 
 # expose role output
