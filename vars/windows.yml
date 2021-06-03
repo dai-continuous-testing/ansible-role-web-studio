@@ -1,6 +1,6 @@
 ---
 
-installation_root_folder: "C:\\Experitest"
+__installation_root_folder: "C:\\Experitest"
 installation_folder: "{{ installation_root_folder }}/{{ app_name }}"
 
 temp_folder: "c:\\temp\\experitest"
