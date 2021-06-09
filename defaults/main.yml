@@ -10,6 +10,8 @@ __app_version: 21.5.186
 clear_before_install: False
 clear_temp_folder: False
 
+start_after_install: True
+
 custom_download_url: ""
 
 cdn_name: "devops-artifacts.experitest.com"
