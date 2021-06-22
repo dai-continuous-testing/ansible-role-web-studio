@@ -12,3 +12,4 @@
   fail:
     msg: "app_version: {{ app_version }} does not macthed to installed version {{ ((installed_version['content'] | b64decode) | from_json).version }}"
   when: app_version != ((installed_version['content'] | b64decode) | from_json).version
+  ignore_errors: "{{ healthcheck_fail_ignore | default('False')}}"
