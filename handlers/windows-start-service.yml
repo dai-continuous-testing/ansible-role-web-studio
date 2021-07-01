@@ -1,0 +1,15 @@
+
+- name: get installed version from build-info.json file
+  slurp:
+    src: "{{ installation_folder }}/current/build-info.json"
+  register: installed_version
+  
+- name: print installed version
+  debug:
+    msg: " Installed version: {{ ((installed_version['content'] | b64decode) | from_json).version }}"
+
+- name: fail if app_version is not equal to installed version
+  fail:
+    msg: "app_version: {{ app_version }} does not macthed to installed version {{ ((installed_version['content'] | b64decode) | from_json).version }}"
+  when: app_version != ((installed_version['content'] | b64decode) | from_json).version
+  ignore_errors: "{{ healthcheck_fail_ignore | default('False')}}"

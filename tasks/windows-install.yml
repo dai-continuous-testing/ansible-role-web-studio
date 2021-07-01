@@ -144,6 +144,8 @@
     dest: "{{ installation_folder }}\\current"
     remote_src: yes
   become: yes
+  notify:
+    - start the service
 
 
 # expose role output

@@ -1,11 +1,16 @@
 ---
+required_modifiable_fields:
+  - app_version
+  - installation_root_folder
 
 app_name: mobile-studio
 
-app_version: 21.6.293
+__app_version: 21.6.293
 
 clear_before_install: False
 clear_temp_folder: False
+
+start_after_install: True
 
 custom_download_url: ""
 
