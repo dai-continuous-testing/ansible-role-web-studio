@@ -2,7 +2,7 @@
 
 app_name: mobile-studio
 
-app_version: 21.5.186
+app_version: 21.6.293
 
 clear_before_install: False
 clear_temp_folder: False
