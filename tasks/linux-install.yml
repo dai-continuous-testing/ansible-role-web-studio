@@ -2,7 +2,9 @@
 # validation
 
 - name: assert all vars are set
-  assert: { that: "{{ item }} != '' " }
+  assert: 
+    that: "{{ item }} != '' " 
+    quiet: true
   with_items:
   - app_name
   - installation_folder
@@ -123,22 +125,3 @@
     creates: "{{ temp_folder }}/{{ (installer_file_name | splitext)[0] }}/index.html"
     owner: "{{ ansible_user_id }}"
   become: yes
-
-- name: synchronize zip content to installation folder
-  command: "rsync -r {{ temp_folder }}/{{ (installer_file_name | splitext)[0] }}/ {{ installation_folder }}/current/"
-  become: yes
-  notify:
-    - start the service
-
-
-# expose role output
-
-- name: sanitize role name
-  set_fact:
-    sanitize_role_name: "{{ role_name | replace('-', '_') | regex_replace('([^A-Za-z0-9_])', '') | trim }}"
-
-- name: expose role output
-  set_fact:
-    "{{ sanitize_role_name }}":
-      installation_folder: "{{ installation_folder }}"
-
