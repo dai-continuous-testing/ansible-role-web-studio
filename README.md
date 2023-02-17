@@ -16,6 +16,8 @@ Role Variables
 | custom_download_password | password to download from custom url on windows | string |  | no |
 | clear_temp_folder | remove temp folder before installation | boolean | False | no |
 | clear_before_install | remove old installation before install | boolean | False | no |
+| download | only download the release version | boolean | True | no |
+| deploy | only deploy the release version | boolean | True | no |
 
 Example Playbook
 ----------------
