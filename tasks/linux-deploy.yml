@@ -1,0 +1,15 @@
+# validation
+
+- name: assert all vars are set
+  assert: 
+    that: "{{ item }} != '' " 
+    quiet: true
+  with_items:
+  - app_name
+  - installation_folder
+
+- name: synchronize zip content to installation folder
+  command: "rsync -r {{ temp_folder }}/{{ (installer_file_name | splitext)[0] }}/ {{ installation_folder }}/current/"
+  become: yes
+  notify:
+    - start the service
