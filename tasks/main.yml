@@ -15,6 +15,17 @@
   when: 
     - state|default('present') == 'present' 
     - ansible_os_family|lower == "redhat" or ansible_os_family|lower == "windows"
+    - download | default('true') | bool
+
+- name: Deploy
+  include_tasks: "tasks/{{ ansible_os_family | os_family_to_os_type }}-deploy.yml"
+  when: 
+    - state|default('present') == 'present'
+    - ansible_os_family|lower == "redhat" or ansible_os_family|lower == "windows"
+    - deploy | default('true') | bool
+
+- name: set-facts for next steps
+  include_tasks: "tasks/{{ ansible_os_family | os_family_to_os_type }}-set-facts.yml"
 
 - name: uninstall
   include_tasks: "tasks/{{ ansible_os_family | os_family_to_os_type }}-uninstall.yml"
