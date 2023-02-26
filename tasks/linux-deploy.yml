@@ -8,8 +8,69 @@
   - app_name
   - installation_folder
 
+
+# delete old installation (optional)
+
+- name: clear old installation folder
+  file: 
+    path: "{{ installation_folder }}"
+    state: absent
+  when: clear_before_install == True
+
+
+# copy current files to previous
+
+- name: check if current installation exists
+  stat:
+    path: "{{ installation_folder }}/current/index.html"
+  become: yes
+  register: current_exists
+
+- name: remove previous installation folder
+  file:
+    path: "{{ installation_folder }}/previous"
+    state: absent
+  when: current_exists.stat.exists
+  become: yes
+
+- name: copy current file to previous directory
+  copy: 
+    src: "{{ installation_folder }}/current" 
+    dest: "{{ installation_folder }}/previous"
+    remote_src: yes
+    directory_mode: yes
+    owner: "{{ ansible_user_id }}"
+  when: current_exists.stat.exists
+  become: yes
+
+# unpack and copy all the files to the installation folder
+
+- name: make sure installation folder exists
+  file:
+    path: "{{ installation_folder }}/current"
+    state: directory
+    owner: "{{ ansible_user_id }}"
+  become: yes
+
+- name: make sure unzip folder exist
+  file:
+    path: "{{ temp_folder }}/{{ (installer_file_name | splitext)[0] }}"
+    state: directory
+    owner: "{{ ansible_user_id }}"
+  become: yes
+
+- name: unzip the file
+  unarchive:
+    src: "{{ temp_folder }}/{{ installer_file_name }}"
+    dest: "{{ temp_folder }}/{{ (installer_file_name | splitext)[0] }}"
+    remote_src: yes
+    creates: "{{ temp_folder }}/{{ (installer_file_name | splitext)[0] }}/index.html"
+    owner: "{{ ansible_user_id }}"
+  become: yes
+
 - name: synchronize zip content to installation folder
   command: "rsync -r {{ temp_folder }}/{{ (installer_file_name | splitext)[0] }}/ {{ installation_folder }}/current/"
   become: yes
   notify:
     - start the service
+    
