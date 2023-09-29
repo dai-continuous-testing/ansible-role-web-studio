@@ -5,7 +5,7 @@ required_modifiable_fields:
 
 app_name: mobile-studio
 
-__app_version: 23.1.1162
+__app_version: 23.9.1338
 
 clear_before_install: False
 clear_temp_folder: False
