@@ -10,20 +10,17 @@
   include_tasks: "tasks/{{ ansible_os_family | os_family_to_os_type }}-clear-temp.yml"
   when: 
     - clear_temp_folder | default('no') | bool
-    - ansible_os_family|lower == "redhat" or ansible_os_family|lower == "windows"
 
 - name: install
   include_tasks: "tasks/{{ ansible_os_family | os_family_to_os_type }}-install.yml"
   when: 
     - state|default('present') == 'present' 
-    - ansible_os_family|lower == "redhat" or ansible_os_family|lower == "windows"
     - download | default('true') | bool
 
 - name: Deploy
   include_tasks: "tasks/{{ ansible_os_family | os_family_to_os_type }}-deploy.yml"
   when: 
     - state|default('present') == 'present'
-    - ansible_os_family|lower == "redhat" or ansible_os_family|lower == "windows"
     - deploy | default('true') | bool
 
 - name: set-facts for next steps
@@ -33,4 +30,3 @@
   include_tasks: "tasks/{{ ansible_os_family | os_family_to_os_type }}-uninstall.yml"
   when: 
     - state|default('present') == 'absent' 
-    - ansible_os_family|lower == "redhat" or ansible_os_family|lower == "windows"
