@@ -2,7 +2,6 @@
 
 - name: validate vars
   include_tasks: tasks/variables.yml
-  when: ansible_os_family|lower == "redhat" or ansible_os_family|lower == "windows"
 
 - name: prerequisite
   include_tasks: "tasks/{{ ansible_os_family | lower }}-prerequisite.yml"
