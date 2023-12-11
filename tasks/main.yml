@@ -1,27 +1,31 @@
 ---
 
+- name: Fail if os family is not redhat or debian
+  fail:
+    msg: Current role does not support on {{ ansible_os_family | lower }}, It only supports CentOS/RedHat, Debian and Windows hosts.
+  when: (ansible_os_family | lower) not in ['redhat', 'debian', 'windows']
+
 - name: validate vars
   include_tasks: tasks/variables.yml
-  when: ansible_os_family|lower == "redhat" or ansible_os_family|lower == "windows"
+
+- name: prerequisite
+  include_tasks: "tasks/{{ ansible_os_family | lower }}-prerequisite.yml"
 
 - name: clear temp folder
   include_tasks: "tasks/{{ ansible_os_family | os_family_to_os_type }}-clear-temp.yml"
   when: 
     - clear_temp_folder | default('no') | bool
-    - ansible_os_family|lower == "redhat" or ansible_os_family|lower == "windows"
 
 - name: install
   include_tasks: "tasks/{{ ansible_os_family | os_family_to_os_type }}-install.yml"
   when: 
     - state|default('present') == 'present' 
-    - ansible_os_family|lower == "redhat" or ansible_os_family|lower == "windows"
     - download | default('true') | bool
 
 - name: Deploy
   include_tasks: "tasks/{{ ansible_os_family | os_family_to_os_type }}-deploy.yml"
   when: 
     - state|default('present') == 'present'
-    - ansible_os_family|lower == "redhat" or ansible_os_family|lower == "windows"
     - deploy | default('true') | bool
 
 - name: set-facts for next steps
@@ -31,4 +35,3 @@
   include_tasks: "tasks/{{ ansible_os_family | os_family_to_os_type }}-uninstall.yml"
   when: 
     - state|default('present') == 'absent' 
-    - ansible_os_family|lower == "redhat" or ansible_os_family|lower == "windows"
