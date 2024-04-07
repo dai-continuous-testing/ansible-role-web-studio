@@ -11,11 +11,6 @@
 - name: prerequisite
   include_tasks: "tasks/{{ ansible_os_family | lower }}-prerequisite.yml"
 
-- name: clear temp folder
-  include_tasks: "tasks/{{ ansible_os_family | os_family_to_os_type }}-clear-temp.yml"
-  when: 
-    - clear_temp_folder | default('no') | bool
-
 - name: install
   include_tasks: "tasks/{{ ansible_os_family | os_family_to_os_type }}-install.yml"
   when: 
@@ -26,6 +21,12 @@
   include_tasks: "tasks/{{ ansible_os_family | os_family_to_os_type }}-deploy.yml"
   when: 
     - state|default('present') == 'present'
+    - deploy | default('true') | bool
+
+- name: clear temp folder
+  include_tasks: "tasks/{{ ansible_os_family | os_family_to_os_type }}-clear-temp.yml"
+  when: 
+    - clear_temp_folder | default('no') | bool
     - deploy | default('true') | bool
 
 - name: set-facts for next steps
