@@ -17,6 +17,7 @@
   file: 
     path: "{{ installation_folder }}"
     state: absent
+  become: yes
   when: clear_before_install == True
 
 
@@ -75,4 +76,3 @@
   become: yes
   notify:
     - start the service
-    
