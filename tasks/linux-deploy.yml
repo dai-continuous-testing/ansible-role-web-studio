@@ -76,4 +76,3 @@
   become: yes
   notify:
     - start the service
-    
