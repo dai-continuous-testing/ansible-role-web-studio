@@ -29,20 +29,8 @@
   become: yes
   register: current_exists
 
-- name: remove previous installation folder
-  file:
-    path: "{{ installation_folder }}/previous"
-    state: absent
-  when: current_exists.stat.exists
-  become: yes
-
-- name: copy current file to previous directory
-  copy: 
-    src: "{{ installation_folder }}/current" 
-    dest: "{{ installation_folder }}/previous"
-    remote_src: yes
-    directory_mode: yes
-    owner: "{{ ansible_user_id }}"
+- name: rename current installation to previous
+  command: "mv {{ installation_folder }}/current {{ installation_folder }}/previous"
   when: current_exists.stat.exists
   become: yes
 
